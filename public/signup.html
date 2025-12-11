@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<body>
+<h2>Signup</h2>
+<form id="f">
+<input name="username" placeholder="username" required /> <br>
+<input name="email" placeholder="email" required /> <br>
+<input name="password" placeholder="password" type="password" required /> <br>
+<button>Sign up</button>
+</form>
+<div id="msg"></div>
+<script>
+const f = document.getElementById('f');
+f.addEventListener('submit', async e => {
+e.preventDefault();
+const data = Object.fromEntries(new FormData(f).entries());
+const r = await fetch('/api/signup', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data)});
+const j = await r.json();
+document.getElementById('msg').innerText = j.error || 'Signed up! Go to login.';
+});
+</script>
+</body>
+</html>
